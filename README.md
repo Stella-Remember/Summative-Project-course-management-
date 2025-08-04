@@ -979,7 +979,3 @@ For questions, issues, or contributions:
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ---
-
-**Built with ❤️ for academic excellence and learning**
-
-This Course Management Platform demonstrates modern backend development practices, security implementations, and scalable architecture design. The system is production-ready and can be easily extended with additional features and integrations.
