@@ -1,7 +1,8 @@
 class LanguageSwitcher {
     constructor() {
-        this.currentLanguage = this.getStoredLanguage() || this.detectBrowserLanguage() || 'en';
         this.translations = window.translations;
+        this.currentLanguage = this.getStoredLanguage() || this.detectBrowserLanguage() || 'en';
+
         
         this.init();
     }

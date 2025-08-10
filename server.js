@@ -10,7 +10,7 @@ const courseRoutes = require('./routes/courses');
 const activityRoutes = require('./routes/activities');
 const userRoutes = require('./routes/users');
 //const notificationRoutes = require('./routes/notifications');
-const swaggerSetup = require('./config/swagger');
+const { swaggerSetup } = require('./config/swagger');
 //const { startNotificationWorker } = require('./services/notificationservice');
 
 const app = express();

@@ -59,7 +59,7 @@ const router = express.Router();
  *       200:
  *         description: Activity tracker entry updated successfully
  */
-router.post('/', authenticate, authorize('facilitator'), [
+router.post('/', authenticate, authorize('facilitator', 'admin', 'manager'), [
   body('allocation_id').isInt({ min: 1 }),
   body('week_number').isInt({ min: 1, max: 52 }),
   body('attendance').optional().isArray(),
@@ -72,22 +72,21 @@ router.post('/', authenticate, authorize('facilitator'), [
   body('notes').optional().isString()
 ], handleValidationErrors, async (req, res) => {
   try {
-    const facilitator = await Facilitator.findOne({ where: { user_id: req.user.id } });
-    
-    // Verify the facilitator owns this course offering
-    const courseOffering = await CourseOffering.findOne({
-      where: {
-        id: req.body.allocation_id,
-        facilitator_id: facilitator.id
-      }
-    });
+  const facilitator = await Facilitator.findOne({ where: { user_id: req.user.id } });
 
-    if (!courseOffering) {
-      return res.status(403).json({
-        success: false,
-        message: 'Access denied. You can only manage activities for your assigned courses.'
-      });
-    }
+if (!facilitator) {
+  return res.status(403).json({
+    success: false,
+    message: 'Access denied. Facilitator record not found for the current user.'
+  });
+}
+
+const courseOffering = await CourseOffering.findOne({
+  where: {
+    id: req.body.allocation_id,
+    facilitator_id: facilitator.id
+  }
+});
 
     const [activity, created] = await ActivityTracker.upsert({
       ...req.body,
