@@ -4,14 +4,17 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
+
+
 const db = require('./config/database');
 const authRoutes = require('./routes/auth');
 const courseRoutes = require('./routes/courses');
 const activityRoutes = require('./routes/activities');
 const userRoutes = require('./routes/users');
-//const notificationRoutes = require('./routes/notifications');
+const notificationRoutes = require('./routes/notifications');
 const { swaggerSetup } = require('./config/swagger');
-//const { startNotificationWorker } = require('./services/notificationservice');
+const { startNotificationWorker } = require('./workers/notificationworker');
+const fullCreationRoutes = require('./routes/fullCreationRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -39,7 +42,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/activities", activityRoutes);
 app.use("/api/users", userRoutes);
-//app.use("/api/notifications", notificationRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use('/api', fullCreationRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -79,9 +83,9 @@ const startServer = async () => {
     await db.sync({ force: false });
     console.log('✅ Database models synchronized.');
 
-    // Start notification worker
-    // startNotificationWorker();
-    // console.log('✅ Notification worker started.');
+    //Start notification worker
+    startNotificationWorker();
+    console.log('✅ Notification worker started.');
 
     app.listen(PORT, () => {
       console.log(`🚀 Server running on http://localhost:${PORT}`);
