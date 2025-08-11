@@ -2,6 +2,12 @@
 
 A comprehensive Course Management Platform backend system built with Node.js, Express, MySQL, and Redis. This system provides role-based access control, course allocation management, facilitator activity tracking, and automated notification systems for academic institutions.
 
+## i18n & l10n Implementation 
+Hosted Url:https://coursemanagmentv3.netlify.app/
+
+## Video
+Video Walkthrough:https://drive.google.com/file/d/1aSctmObLacTf-eYASRCJyuZiooChBp7I/view?usp=sharing
+
 ## 🚀 Features
 
 ### Core Functionality
